@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Birthday Calendar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body class="w3-container">
+
+    <!-- Card UI Div for each day -->
+	<div>
+	    <div class="w3-card-4" style="width:14%; float:left;">	 
+			<header class="w3-container w3-blue">
+			  <h2 style="float:right">Sun</h2>
+			</header>
+			<div class="w3-container" id="sundayCard" style="height:20%;background-image:url('background.jpg');">
+			<p style="height:200px;" id="sunday"></p>
+			</div>
+			<footer class="w3-container">
+			  <h5 id="sunday-count">No Birthdays</h5>
+			</footer>
+		</div>
+		
+		<div class="w3-card-4" style="width:14%; float:left;">	 
+			<header class="w3-container w3-blue">
+			  <h2 style="float:right">Mon</h2>
+			</header>
+			<div class="w3-container" id="mondayCard"  style="height:20%;background-image:url('background.jpg');">
+			<p style="height:200px;" id="monday"></p>
+			</div>
+			<footer class="w3-container">
+			  <h5 id="monday-count">No Birthdays</h5>
+			</footer>
+		</div>
+
+		<div class="w3-card-4" style="width:14%; float:left;">	 
+			<header class="w3-container w3-blue">
+			  <h2 style="float:right">Tue</h2>
+			</header>
+			<div class="w3-container" id="tuesdayCard" style="height:20%;background-image:url('background.jpg');">
+			<p style="height:200px;" id="tuesday"></p>
+			</div>
+			<footer class="w3-container">
+			  <h5 id="tuesday-count">No Birthdays</h5>
+			</footer>
+		</div>
+		
+		<div class="w3-card-4" style="width:14%; float:left;">	 
+			<header class="w3-container w3-blue">
+			  <h2 style="float:right">Wed</h2>
+			</header>
+			<div class="w3-container" id="wednesdayCard" style="height:20%;background-image:url('background.jpg');">
+			<p style="height:200px;" id="wednesday"></p>
+			</div>
+			<footer class="w3-container">
+			  <h5 id="wednesday-count">No Birthdays</h5>
+			</footer>
+		</div>
+		
+		<div class="w3-card-4" style="width:14%; float:left;">	 
+			<header class="w3-container w3-blue"  >
+			  <h2 style="float:right">Thu</h2>
+			</header>
+			<div class="w3-container" id="thursdayCard" style="height:20%;background-image:url('background.jpg');">
+			<p style="height:200px;" id="thursday"></p>
+			</div>
+			<footer class="w3-container">
+			  <h5 id="thursday-count">No Birthdays</h5>
+			</footer>
+		</div>
+		
+		<div class="w3-card-4" style="width:14%; float:left;">	 
+			<header class="w3-container w3-blue">
+			  <h2 style="float:right">Fri</h2>
+			</header>
+			<div class="w3-container" id="fridayCard" style="height:20%;background-image:url('background.jpg');">
+			<p style="height:200px;" id="friday"></p>
+			</div>
+			<footer class="w3-container">
+			  <h5 id="friday-count">No Birthdays</h5>
+			</footer>
+		</div>
+		
+		<div class="w3-card-4" style="width:14%; float:left;">	 
+			<header class="w3-container w3-blue">
+			  <h2 style="float:right">Sat</h2>
+			</header>
+			<div class="w3-container" id="saturdayCard" style="height:20%;background-image:url('background.jpg');">
+			<p style="height:200px;" id="saturday"></p>
+			</div>
+			<footer class="w3-container">
+			  <h5 id="saturday-count">No Birthdays</h5>
+			</footer>
+		</div>		
+	</div>	
+	<!-- End of card UI Div -->
+
+	<!-- Json upload -->
+	<div>
+		<div class="form-group" style="float:left;">
+		  <label for="json">Json:</label>
+		  <textarea class="form-control" rows="10" cols="150" id="json"></textarea>
+		</div>
+		<div style="width=40%; float:left;">
+			 <div class="form-group">
+				 <label for="year">Year:</label>
+				 <input type="text" class="form-control" id="year">
+			 </div>
+		     <button type="button" class="btn btn-primary" onclick = processData()>Update</button>
+		</div>
+	</div>
+	<!-- End of Json Upload -->
+	
+	<script>
+	
+	function processData(){
+	    document.getElementById("sunday").innerHTML = "";
+		document.getElementById("monday").innerHTML = "";
+		document.getElementById("tuesday").innerHTML = "";
+		document.getElementById("wednesday").innerHTML = "";
+		document.getElementById("thursday").innerHTML = "";
+		document.getElementById("friday").innerHTML = "";
+		document.getElementById("saturday").innerHTML = "";	
+		document.getElementById("sunday-count").innerHTML = "";
+		document.getElementById("monday-count").innerHTML = "";
+		document.getElementById("tuesday-count").innerHTML = "";
+		document.getElementById("wednesday-count").innerHTML = "";
+		document.getElementById("thursday-count").innerHTML = "";
+		document.getElementById("friday-count").innerHTML = "";
+		document.getElementById("saturday-count").innerHTML = "";
+		var sundayCount = 0;
+		var mondayCount = 0;
+		var tuesdayCount = 0;
+		var wednesdayCount = 0;
+		var thursdayCount = 0;
+		var fridayCount = 0;
+		var saturdayCount = 0;
+		var size =200;
+		
+		//Fetch year and Json data
+	    var year = document.getElementById("year").value;
+	    var tempJson = document.getElementById("json").value;
+	    var json =JSON.parse(tempJson);
+		
+		//Sort data in acending order of birthdate
+	    json.sort(function(a, b) {
+           return Date.parse(a.birthday) - Date.parse(b.birthday);
+        });
+		
+	    //Count no. of occurences of data for each weekday
+		for(var i = 0; i < json.length; ++i){
+			var birthDateString = json[i].birthday;
+			var modifiedBirthDateString = birthDateString.substring(0,6) + year;
+			var birthDate = new Date(modifiedBirthDateString);
+			var birthDay = birthDate.getDay();
+			var cardBody;
+			switch(birthDay){
+				 case 0:{
+				 cardBody = document.getElementById("sundayCard");
+				 cardBody.style.backgroundImage = "url('backgroundAfter.jpg')";
+				 sundayCount++;
+				 break;
+				 }
+				 case 1:{
+				 cardBody = document.getElementById("mondayCard");
+				 cardBody.style.backgroundImage = "url('backgroundAfter.jpg')";
+				 mondayCount++;
+				 break;
+				 }
+				 case 2:{
+				 cardBody = document.getElementById("tuesdayCard");
+				 cardBody.style.backgroundImage = "url('backgroundAfter.jpg')";
+				 tuesdayCount++;
+				 break;
+				 }
+				 case 3:{
+				 cardBody = document.getElementById("wednesdayCard");
+				 cardBody.style.backgroundImage = "url('backgroundAfter.jpg')";
+				 wednesdayCount++;
+				 break;
+				 }
+				 case 4:{
+				 cardBody = document.getElementById("thursdayCard");
+				 cardBody.style.backgroundImage = "url('backgroundAfter.jpg')";
+				 thursdayCount++;
+				 break;
+				 }
+				 case 5:{
+				 cardBody = document.getElementById("fridayCard");
+				 cardBody.style.backgroundImage = "url('backgroundAfter.jpg')";
+				 fridayCount++;
+				 break;
+				 }
+				 case 6:{
+				 cardBody = document.getElementById("saturdayCard");
+				 cardBody.style.backgroundImage = "url('backgroundAfter.jpg')";
+				 saturdayCount++;
+				 break;
+				 }			 
+			}			
+		}
+        
+        // Update UI for each weekday's data		
+		for(var i = 0; i < json.length; ++i){
+			var birthDateString = json[i].birthday;
+			var modifiedBirthDateString = birthDateString.substring(0,6) + year;
+			var birthDate = new Date(modifiedBirthDateString);
+			var birthDay = birthDate.getDay();
+			var shortName = "";
+			var name = json[i].name;
+			shortName = name[0];
+			for (var j = 0; j<name.length; j++){
+				if(name[j]==" "){
+					shortName = shortName + name[j+1];
+					break;
+				}
+			}
+			switch(birthDay){
+				 case 0:{
+				 setShortNameCard("sunday-count","sunday",shortName,size,sundayCount);
+				 break;
+				 }
+				 case 1:{
+		         setShortNameCard("monday-count","monday",shortName,size,mondayCount);
+				 break;
+				 }
+				 case 2:{
+		         setShortNameCard("tuesday-count","tuesday",shortName,size,tuesdayCount);
+				 break;
+				 }
+				 case 3:{
+		         setShortNameCard("wednesday-count","wednesday",shortName,size,wednesdayCount);
+				 break;
+				 }
+				 case 4:{
+		         setShortNameCard("thursday-count","thursday",shortName,size,thursdayCount);
+				 break;
+				 }
+				 case 5:{
+		         setShortNameCard("friday-count","friday",shortName,size,fridayCount);
+				 break;
+				 }
+				 case 6:{
+		         setShortNameCard("saturday-count","saturday",shortName,size,saturdayCount);
+				 break;
+				 }			 
+			}
+		}
+	}
+	
+	// Set short-name card in UI 
+	function setShortNameCard(countId,dayId, shortName,daySize,dayCount){
+		var z = daySize/dayCount;
+		var shortNameCard = "<div   style=\"float:left;height:" +
+				z + "px; width:" + z + "px;background-color:"+ "#"+((1<<24)*Math.random()|0).toString(16)+"\">" + 
+				"<center style=\"vertical-align: middle;\"><b>"+shortName+ "</b></center>" +"</div>"				 
+        document.getElementById(dayId).innerHTML += shortNameCard;
+        document.getElementById(countId).innerHTML = dayCount + " Birthdays";
+	}
+	</script>	
+</body>
+</html>
